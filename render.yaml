@@ -20,6 +20,8 @@ services:
         value: "False"
       - key: ALLOWED_HOSTS
         value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://agro-inversiones-pos.onrender.com,https://tu-dominio.com"
       - key: DJANGO_SETTINGS_MODULE
         value: agro_project.settings
       - key: DATABASE_URL
