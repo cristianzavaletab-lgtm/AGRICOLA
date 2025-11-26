@@ -29,6 +29,7 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',') if os.environ.get('CSRF_TRUSTED_ORIGINS') else []
+APP_BASE_URL = os.environ.get('APP_BASE_URL', '')
 
 
 # Application definition
@@ -116,6 +117,8 @@ TIME_ZONE = 'America/Lima'
 USE_I18N = True
 
 USE_TZ = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Static files (CSS, JavaScript, Images)

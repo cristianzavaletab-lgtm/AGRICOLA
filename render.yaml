@@ -25,6 +25,8 @@ services:
         value: "https://agro-inversiones-pos.onrender.com,https://tu-dominio.com"
       - key: DJANGO_SETTINGS_MODULE
         value: agro_project.settings
+      - key: APP_BASE_URL
+        value: "https://agro-inversiones-pos.onrender.com"
       - key: DATABASE_URL
         fromDatabase:
           name: agro-db
