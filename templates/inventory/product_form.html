@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Producto - MIJAEL{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Header Mobile -->
+    <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+            <a href="{% url 'product_list' %}"
+                class="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg transition">
+                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold text-gray-800">
+                    {% if form.instance.pk %}✏️ Editar Producto{% else %}➕ Nuevo Producto{% endif %}
+                </h1>
+                <p class="text-sm text-gray-500">Completa la información del producto</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.errors and form.is_bound %}
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 m-6">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <p class="font-medium text-red-800">Por favor corrige los errores marcados</p>
+                </div>
+                {% if form.non_field_errors %}
+                <ul class="mt-2 text-sm text-red-700 list-disc list-inside">
+                    {% for err in form.non_field_errors %}
+                    <li>{{ err }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <div class="p-6 space-y-6">
+                <!-- Nombre del Producto -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">📦 Nombre del Producto *</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">💵 Precio Compra *</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-gray-500 font-medium">S/</span>
+                        {{ form.price_buy }}
+                    </div>
+                    {% if form.price_buy.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.price_buy.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        💰 Precio Venta *
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3.5 text-success-600 font-bold">S/</span>
+                        {{ form.price_sell }}
+                    </div>
+                    {% if form.price_sell.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.price_sell.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Stock -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        📊 Stock Actual *
+                    </label>
+                    {{ form.stock }}
+                    {% if form.stock.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.stock.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        ⚠️ Stock Mínimo *
+                    </label>
+                    {{ form.stock_min }}
+                    {% if form.stock_min.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.stock_min.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Fecha Vencimiento e Imagen -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        📅 Fecha Vencimiento (opcional)
+                    </label>
+                    {{ form.expiration_date }}
+                    {% if form.expiration_date.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.expiration_date.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        🖼️ Imagen
+                    </label>
+                    {% if form.instance.image %}
+                    <p class="text-xs text-gray-500 mb-2">Actualmente: {{ form.instance.image.name }}</p>
+                    {% endif %}
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.image.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6 pt-0">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">🏷️ Categoría</label>
+                    {{ form.category }}
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">🏭 Proveedor</label>
+                    {{ form.supplier }}
+                </div>
+            </div>
+        
+        <!-- Footer Buttons -->
+        <div class="bg-gray-50 px-6 py-4 flex flex-col-reverse md:flex-row gap-3">
+            <a href="{% url 'product_list' %}"
+                class="flex-1 md:flex-none px-6 py-3 text-center bg-white border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">Cancelar</a>
+            <button type="submit"
+                class="flex-1 md:flex-auto px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg hover:from-primary-600 hover:to-primary-700 shadow-lg hover:shadow-xl transition font-bold text-lg">💾 {% if form.instance.pk %}Actualizar{% else %}Guardar{% endif %} Producto</button>
+        </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

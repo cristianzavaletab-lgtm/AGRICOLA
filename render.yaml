@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: agro-inversiones-pos
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn agro_project.wsgi:application --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    disk:
+      name: media
+      mountPath: /opt/render/project/src/media
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DJANGO_SETTINGS_MODULE
+        value: agro_project.settings
+    postDeployCommand: |
+      python manage.py migrate --noinput
+      python manage.py collectstatic --noinput
+      python create_superuser.py

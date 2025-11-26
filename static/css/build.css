@@ -1,0 +1,22 @@
+.btn-primary {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #3A7D44;
+  color: #fff;
+  border-radius: 0.5rem;
+  transition: background-color 150ms ease-in-out, transform 150ms ease-in-out;
+}
+.btn-primary:hover { background-color: #2E6B3B; }
+.btn-primary:active { transform: translateY(1px); }
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  outline: none;
+}
+.input-field:focus {
+  border-color: #8BC34A;
+  box-shadow: 0 0 0 2px rgba(139, 195, 74, 0.3);
+}

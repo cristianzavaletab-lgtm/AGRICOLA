@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Productos - AgroSystem{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Productos</h1>
+    <a href="{% url 'product_add' %}" class="btn-primary">
+        + Nuevo Producto
+    </a>
+</div>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="p-4 border-b border-gray-200">
+        <form method="get" class="flex gap-2">
+            <input type="text" name="q" placeholder="Buscar producto..." value="{{ request.GET.q|default:'' }}"
+                class="input-field max-w-xs">
+            <button type="submit" class="px-4 py-2 bg-primary-50 text-primary-700 rounded hover:bg-primary-100">Buscar</button>
+        </form>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-sm sm:text-base">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Categoría
+                    </th>
+                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Precio Venta
+                    </th>
+                    <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for product in products %}
+                <tr>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap">
+                        <div class="flex items-center">
+                            {% if product.image %}
+                            <img class="h-10 w-10 rounded-full object-cover mr-3" src="{{ product.image.url }}" alt="">
+                            {% else %}
+                            <div
+                                class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center mr-3 text-gray-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            {% endif %}
+                        <div class="text-sm font-medium text-gray-900">{{ product.name }}</div>
+                        </div>
+                    </td>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">{{ product.category.name|default:"-" }}
+                    </td>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap">
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if product.is_low_stock %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
+                            {{ product.stock }}
+                        </span>
+                    </td>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">S/ {{ product.price_sell }}</td>
+                    <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm font-medium">
+                        <a href="{% url 'product_edit' product.pk %}"
+                            class="text-primary-600 hover:text-primary-800 mr-3">Editar</a>
+                        <a href="{% url 'product_delete' product.pk %}" class="text-red-600 hover:text-red-800">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-4 sm:px-6 py-4 text-center text-gray-500">No hay productos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

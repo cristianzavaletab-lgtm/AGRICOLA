@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgroSystem</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/build.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agro: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-cream-50 to-secondary-50 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border-t-4 border-agro-600">
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-3">
+                <img src="{% static 'img/icon-192.png' %}" alt="Logo" class="w-12 h-12 rounded mr-2">
+                <div>
+                    <h1 class="text-2xl font-extrabold text-primary-700">AGROINVERSIONES</h1>
+                    <p class="text-lg font-bold text-primary-600 -mt-1">MIJAEL</p>
+                </div>
+            </div>
+            <p class="text-gray-500">Bienvenido de nuevo</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.errors %}
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                <p class="font-bold">Error</p>
+                <p>Usuario o contraseña incorrectos.</p>
+            </div>
+            {% endif %}
+
+            <div>
+                <label for="id_username" class="block text-sm font-medium text-gray-700">Usuario</label>
+                <input type="text" name="username" id="id_username" required
+                    class="input-field mt-1">
+            </div>
+
+            <div>
+                <label for="id_password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                <input type="password" name="password" id="id_password" required
+                    class="input-field mt-1">
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-3 text-base">
+                Ingresar
+            </button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar Compra - AgroSystem{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Registrar Compra</h1>
+        <a href="{% url 'purchase_list' %}" class="text-gray-600 hover:text-gray-900">Cancelar</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-b pb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Proveedor</label>
+                    {{ form.supplier }}
+                    {{ form.supplier.errors }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Fecha</label>
+                    {{ form.date }}
+                    {{ form.date.errors }}
+                </div>
+
+                <div class="col-span-2">
+                    <label class="block text-sm font-medium text-gray-700">Nota</label>
+                    {{ form.note }}
+                    {{ form.note.errors }}
+                </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mt-6 mb-4">Productos</h3>
+
+            {{ details.management_form }}
+            <div id="formset-container">
+                {% for detail_form in details %}
+                <div
+                    class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-gray-50 rounded border border-gray-200 detail-form">
+                    {{ detail_form.id }}
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Producto</label>
+                        {{ detail_form.product }}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Cantidad</label>
+                        {{ detail_form.quantity }}
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500">Costo Unitario</label>
+                        {{ detail_form.price_unit }}
+                    </div>
+                    {% if details.can_delete %}
+                    <div class="hidden">{{ detail_form.DELETE }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="flex justify-end pt-4">
+                <button type="submit" class="btn-primary">
+                    Guardar Compra y Actualizar Stock
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

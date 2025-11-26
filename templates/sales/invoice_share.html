@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante #{{ sale.id }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-xl mx-auto p-4">
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <img src="{% static 'img/icon-192.png' %}" alt="Logo" class="w-10 h-10 rounded">
+                <div>
+                    <h1 class="text-xl font-extrabold text-gray-800">AGROINVERSIONES MIJAEL</h1>
+                    <p class="text-xs text-gray-500">Comprobante #{{ sale.id }}</p>
+                </div>
+            </div>
+
+            <div id="voucher-card" class="rounded-lg border border-gray-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-4">
+                    <p class="text-sm">Cliente</p>
+                    <p class="text-lg font-bold">{{ sale.client.name|default:"-" }}</p>
+                    <p class="text-xs opacity-90">DNI/RUC: {{ sale.client.dni|default:"-" }} · Tel: {{ sale.client.phone|default:"-" }}</p>
+                </div>
+                <div class="p-4 space-y-2">
+                    <p class="text-sm text-gray-600">Fecha: {{ sale.date|date:"d/m/Y H:i" }}</p>
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-gray-600">Vendedor: {{ sale.user.username|default:"-" }}</p>
+                        <p class="text-2xl font-bold text-green-600">S/ {{ sale.total }}</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 text-center text-xs text-gray-500">
+                    Gracias por su compra
+                </div>
+            </div>
+
+            <div class="space-y-3 mt-4">
+                <a href="{{ public_url }}" target="_blank"
+                   class="block w-full text-center px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700">Abrir comprobante guardado</a>
+
+                <button onclick="window.print()"
+                        class="w-full px-4 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900">Descargar como PDF</button>
+
+                <button id="btn-generate" class="w-full px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Generar imagen</button>
+                <a id="btn-download" download="comprobante_{{ sale.id }}.png" class="hidden w-full text-center px-4 py-3 bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100">Descargar imagen</a>
+                <button id="btn-share" class="hidden w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">Compartir imagen por WhatsApp</button>
+
+                <button onclick="navigator.clipboard.writeText('{{ public_url }}')"
+                        class="w-full px-4 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300">Copiar enlace</button>
+            </div>
+
+            <p class="text-xs text-gray-500 mt-4">Si el PDF nativo no está disponible, usa “Generar imagen” o “Descargar como PDF”.</p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        const btnGen = document.getElementById('btn-generate');
+        const btnDl = document.getElementById('btn-download');
+        const btnShare = document.getElementById('btn-share');
+        const card = document.getElementById('voucher-card');
+        let lastBlob = null;
+
+        btnGen.addEventListener('click', async () => {
+            const canvas = await html2canvas(card, { scale: 2, backgroundColor: null });
+            const dataUrl = canvas.toDataURL('image/png');
+            btnDl.href = dataUrl;
+            btnDl.classList.remove('hidden');
+            try {
+                const res = await fetch(dataUrl);
+                const blob = await res.blob();
+                lastBlob = blob;
+                if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'comprobante.png', { type: 'image/png' })] })) {
+                    btnShare.classList.remove('hidden');
+                }
+            } catch {}
+        });
+
+        btnShare.addEventListener('click', async () => {
+            if (!lastBlob) return;
+            try {
+                const file = new File([lastBlob], 'comprobante.png', { type: 'image/png' });
+                await navigator.share({ files: [file], title: 'Comprobante de Pago', text: 'Comprobante de pago' });
+            } catch (e) {}
+        });
+    </script>
+</body>
+</html>

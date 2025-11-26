@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if category %}Editar{% else %}Nueva{% endif %} Categoría - AgroSystem{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">
+                {% if category %}✏️ Editar Categoría{% else %}➕ Nueva Categoría{% endif %}
+            </h1>
+            <p class="text-sm text-gray-600">{{ category.name|default:"Ingresa el nombre de la categoría" }}</p>
+        </div>
+
+        <!-- Form -->
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                    Nombre de la Categoría *
+                </label>
+                <input type="text" name="name" id="name" required maxlength="100" value="{{ category.name|default:'' }}"
+                    class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-xl focus:border-primary-500 focus:outline-none shadow-sm"
+                    placeholder="Ej: Fertilizantes, Semillas, Herramientas...">
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col-reverse md:flex-row gap-3 pt-4">
+                <a href="{% url 'category_list' %}"
+                    class="flex-1 px-6 py-3 text-center bg-gray-200 text-gray-700 rounded-xl hover:bg-gray-300 transition font-medium">
+                    Cancelar
+                </a>
+                <button type="submit"
+                    class="flex-1 px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg hover:shadow-xl transition font-medium">
+                    💾 {% if category %}Actualizar{% else %}Crear{% endif %} Categoría
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

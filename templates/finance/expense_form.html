@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Gasto - AgroSystem{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Gasto
+        </h1>
+        <a href="{% url 'expense_list' %}" class="text-gray-600 hover:text-gray-900">Cancelar</a>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Monto</label>
+                    {{ form.amount }}
+                    {{ form.amount.errors }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Fecha</label>
+                    {{ form.date }}
+                    {{ form.date.errors }}
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Categoría</label>
+                    {{ form.category }}
+                    {{ form.category.errors }}
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-4">
+                <button type="submit" class="btn-primary">
+                    Guardar Gasto
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
