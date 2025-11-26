@@ -13,6 +13,7 @@ services:
     disk:
       name: media
       mountPath: /opt/render/project/src/media
+      sizeGB: 1
     envVars:
       - key: SECRET_KEY
         generateValue: true
