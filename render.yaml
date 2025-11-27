@@ -7,14 +7,18 @@ services:
     name: agro-inversiones-pos
     env: python
     plan: free
+    rootDirectory: .
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn agro_project.wsgi:application --bind 0.0.0.0:$PORT
     autoDeploy: true
+    healthCheckPath: /login/
     disk:
       name: media
       mountPath: /opt/render/project/src/media
       sizeGB: 1
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
