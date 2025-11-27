@@ -54,10 +54,15 @@
                     <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">{{ product.category.name|default:"-" }}
                     </td>
                     <td class="px-4 sm:px-6 py-3 whitespace-nowrap">
-                        <span
-                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if product.is_low_stock %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
-                            {{ product.stock }}
+                        {% if product.is_low_stock %}
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-alert-500 text-white">
+                            Bajo stock: {{ product.stock }}
                         </span>
+                        {% else %}
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-secondary-100 text-primary-700">
+                            Stock: {{ product.stock }}
+                        </span>
+                        {% endif %}
                     </td>
                     <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm text-gray-500 hidden sm:table-cell">S/ {{ product.price_sell }}</td>
                     <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-sm font-medium">

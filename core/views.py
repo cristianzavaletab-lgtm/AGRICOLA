@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
@@ -43,5 +44,8 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         
         # Recent Sales
         context['recent_sales'] = Sale.objects.order_by('-date')[:5]
-        
+
         return context
+
+def healthz(request):
+    return HttpResponse('OK')

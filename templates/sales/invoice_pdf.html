@@ -326,7 +326,7 @@
                 <div class="info-box">
                     <h3>📋 Información de Venta</h3>
                     <p><strong>Fecha:</strong> {{ sale.date|date:"d/m/Y H:i" }}</p>
-                    <p><strong>Vendedor:</strong> {{ sale.user.get_full_name|default:sale.user.username }}</p>
+                    <p><strong>Vendedor:</strong> {% if sale.user %}{{ sale.user.get_full_name|default:sale.user.username }}{% else %}-{% endif %}</p>
                 </div>
 
                 <div class="info-box">

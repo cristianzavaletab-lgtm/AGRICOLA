@@ -12,6 +12,12 @@ class PurchaseListView(LoginRequiredMixin, ListView):
     template_name = 'inventory/purchase_list.html'
     context_object_name = 'purchases'
     ordering = ['-date']
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = context['purchases']
+        context['total_sum'] = sum(p.total for p in qs)
+        return context
 
 class PurchaseCreateView(LoginRequiredMixin, CreateView):
     model = Purchase
