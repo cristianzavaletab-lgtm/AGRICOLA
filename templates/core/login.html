@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - AgroSystem</title>
-    {% load static %}
+
     <link rel="stylesheet" href="{% static 'css/build.css' %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,7 +30,7 @@
     </script>
 </head>
 
-<body class="bg-gradient-to-br from-cream-50 to-secondary-50 h-screen flex items-center justify-center">
+<body class="bg-gradient-to-br from-agro-50 to-agro-600 h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border-t-4 border-agro-600">
         <div class="text-center mb-8">
             <div class="flex items-center justify-center mb-3">
@@ -55,14 +55,12 @@
 
             <div>
                 <label for="id_username" class="block text-sm font-medium text-gray-700">Usuario</label>
-                <input type="text" name="username" id="id_username" required
-                    class="input-field mt-1">
+                <input type="text" name="username" id="id_username" required class="input-field mt-1">
             </div>
 
             <div>
                 <label for="id_password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input type="password" name="password" id="id_password" required
-                    class="input-field mt-1">
+                <input type="password" name="password" id="id_password" required class="input-field mt-1">
             </div>
 
             <button type="submit" class="btn-primary w-full py-3 text-base">

@@ -36,7 +36,7 @@ def invoice_pdf(request, sale_id):
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(html_string)
 
-    base = settings.APP_BASE_URL or f"{request.scheme}://{request.get_host}"
+    base = settings.APP_BASE_URL or f"{request.scheme}://{request.get_host()}"
     public_url = f"{base}{settings.MEDIA_URL}invoices/{file_name}"
 
     whatsapp_text = quote(f"Comprobante de venta #{sale.id} - Total S/ {sale.total}\n{public_url}")

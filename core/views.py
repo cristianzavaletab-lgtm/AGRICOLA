@@ -9,6 +9,7 @@ from django.db.models import Sum, F
 from django.utils import timezone
 from inventory.models import Product
 from sales.models import Sale
+from django.db import connection
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -48,4 +49,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return context
 
 def healthz(request):
+    check_db = request.GET.get('db')
+    if check_db:
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT 1')
+                row = cursor.fetchone()
+            return HttpResponse('OK DB')
+        except Exception as e:
+            return HttpResponse(f'DB ERROR: {str(e)}', status=500)
     return HttpResponse('OK')

@@ -159,157 +159,8 @@
 
             .whatsapp-button {
                 display: none;
-                < !DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Boleta de Venta #{{ sale.id }
             }
-
-            </title><style>* {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            body {
-                font-family: 'Arial', sans-serif;
-                padding: 40px;
-                background: white;
-            }
-
-            .invoice {
-                max-width: 800px;
-                margin: 0 auto;
-                border: 2px solid #2563eb;
-                border-radius: 10px;
-                overflow: hidden;
-            }
-
-            .header {
-                background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-                color: white;
-                padding: 30px;
-                text-align: center;
-            }
-
-            .header h1 {
-                font-size: 32px;
-                margin-bottom: 10px;
-            }
-
-            .header p {
-                font-size: 16px;
-                opacity: 0.9;
-            }
-
-            .content {
-                padding: 30px;
-            }
-
-            .info-section {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 30px;
-                padding-bottom: 20px;
-                border-bottom: 2px solid #e5e7eb;
-            }
-
-            .info-box {
-                flex: 1;
-            }
-
-            .info-box h3 {
-                color: #374151;
-                font-size: 14px;
-                margin-bottom: 10px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .info-box p {
-                color: #6b7280;
-                font-size: 14px;
-                margin: 5px 0;
-            }
-
-            .info-box strong {
-                color: #111827;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 30px;
-            }
-
-            thead {
-                background-color: #f3f4f6;
-            }
-
-            th {
-                padding: 15px;
-                text-align: left;
-                font-size: 14px;
-                color: #374151;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-
-            td {
-                padding: 15px;
-                border-bottom: 1px solid #e5e7eb;
-                color: #6b7280;
-            }
-
-            .total-section {
-                display: flex;
-                justify-content: flex-end;
-            }
-
-            .total-box {
-                background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-                color: white;
-                padding: 20px 40px;
-                border-radius: 10px;
-                text-align: right;
-            }
-
-            .total-box p {
-                font-size: 16px;
-                margin-bottom: 5px;
-            }
-
-            .total-box h2 {
-                font-size: 36px;
-            }
-
-            .footer {
-                margin-top: 40px;
-                padding-top: 20px;
-                border-top: 2px solid #e5e7eb;
-                text-align: center;
-                color: #9ca3af;
-                font-size: 12px;
-            }
-
-            .whatsapp-button {
-                display: inline-block;
-                background: #25D366;
-                color: white;
-                padding: 15px 30px;
-                border-radius: 50px;
-                text-decoration: none;
-                font-weight: bold;
-                margin-top: 20px;
-                font-size: 16px;
-            }
-
-            @media print {
-                body {
-                    padding: 0;
-                }
-
-                .whatsapp-button {
-                    display: none;
-                }
-            }
+        }
     </style>
 </head>
 
@@ -326,7 +177,8 @@
                 <div class="info-box">
                     <h3>📋 Información de Venta</h3>
                     <p><strong>Fecha:</strong> {{ sale.date|date:"d/m/Y H:i" }}</p>
-                    <p><strong>Vendedor:</strong> {% if sale.user %}{{ sale.user.get_full_name|default:sale.user.username }}{% else %}-{% endif %}</p>
+                    <p><strong>Vendedor:</strong> {% if sale.user %}{{
+                        sale.user.get_full_name|default:sale.user.username }}{% else %}-{% endif %}</p>
                 </div>
 
                 <div class="info-box">
