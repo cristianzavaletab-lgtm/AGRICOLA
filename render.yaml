@@ -10,12 +10,14 @@ services:
     rootDirectory: .
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
     startCommand: gunicorn agro_project.wsgi:application --bind 0.0.0.0:$PORT
+
     autoDeploy: true
     healthCheckPath: /healthz
     disk:
       name: media
       mountPath: /opt/render/project/src/media
       sizeGB: 1
+
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.11"
@@ -33,8 +35,9 @@ services:
         value: "https://agricola-3r6y.onrender.com"
       - key: DATABASE_URL
         fromDatabase:
-          name: agro-db
+          name: AGRICOLA     # <--- corregido
           property: connectionString
+
     postDeployCommand: |
       python manage.py migrate --noinput
       python manage.py collectstatic --noinput
