@@ -1,5 +1,5 @@
 databases:
-  - name: agro-db
+  - name: AGRICOLA
     plan: free
 
 services:
