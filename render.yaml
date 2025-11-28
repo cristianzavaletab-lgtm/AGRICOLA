@@ -28,7 +28,7 @@ services:
       - key: ALLOWED_HOSTS
         value: ".onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://agricola-3r6y.onrender.com"
+        value: "https://*.onrender.com"
       - key: DJANGO_SETTINGS_MODULE
         value: agro_project.settings
       - key: APP_BASE_URL
