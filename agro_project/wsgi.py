@@ -9,11 +9,10 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 
 import os
 
-from django.core.wsgi import get_wsgi_application
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'agro_project.settings')
 
-application = get_wsgi_application()
+import django
+django.setup()
 
 from django.core.management import call_command
 from django.contrib.auth.models import User
@@ -28,3 +27,7 @@ try:
         User.objects.create_superuser('admin', 'admin@example.com', 'admin')
 except Exception:
     pass
+
+from django.core.wsgi import get_wsgi_application
+
+application = get_wsgi_application()
