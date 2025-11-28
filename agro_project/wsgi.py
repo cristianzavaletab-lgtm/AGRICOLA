@@ -14,3 +14,17 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'agro_project.settings')
 
 application = get_wsgi_application()
+
+from django.core.management import call_command
+from django.contrib.auth.models import User
+
+try:
+    call_command('migrate', interactive=False)
+except Exception:
+    pass
+
+try:
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+except Exception:
+    pass
